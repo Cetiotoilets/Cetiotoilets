@@ -386,6 +386,92 @@ section{position:relative;}
 .mx-auto{margin-left:auto;margin-right:auto;}
 ::selection{background:var(--taupe);color:var(--ink);}
 
+
+/* ============ DEPTH & MOTION ENHANCEMENTS (v3) ============ */
+:root{
+  --shadow-sm: 0 8px 22px -12px rgba(13,13,13,.30), 0 2px 6px -2px rgba(13,13,13,.16);
+  --shadow-md: 0 26px 60px -22px rgba(13,13,13,.40), 0 8px 20px -10px rgba(13,13,13,.22);
+  --shadow-lg: 0 46px 100px -30px rgba(13,13,13,.52), 0 16px 36px -14px rgba(13,13,13,.30);
+}
+
+.split img, .frame img{box-shadow:var(--shadow-md);}
+.collection-panel{box-shadow:var(--shadow-md);transition:transform .6s var(--ease),box-shadow .6s var(--ease);}
+.collection-panel:hover{box-shadow:var(--shadow-lg);}
+.plgrid-card{box-shadow:var(--shadow-sm);transition:transform .55s var(--ease),box-shadow .55s var(--ease);}
+.plgrid-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg);}
+.pd-gallery{box-shadow:var(--shadow-md);}
+.pd-thumbs button{box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease),opacity .3s ease,border-color .3s ease;}
+.pd-thumbs button:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+
+.value-card{
+  background:rgba(162,138,114,.07);
+  border:1px solid var(--taupe-dim);border-top:1px solid var(--taupe-dim);
+  border-radius:3px;padding:30px 26px 26px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+}
+.value-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);}
+
+.collection-copy{
+  background:rgba(12,10,8,.32);
+  border-radius:3px;
+  box-shadow:var(--shadow-sm);
+  backdrop-filter:blur(1px);
+}
+
+.trust-strip .stat{
+  padding:28px 18px;border:1px solid var(--taupe-dim);border-radius:3px;
+  box-shadow:var(--shadow-sm);background:rgba(0,0,0,.02);
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+}
+.bg-ink .trust-strip .stat, .bg-espresso .trust-strip .stat{background:rgba(255,255,255,.03);}
+.trust-strip .stat:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);}
+
+.spec-pills span{box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+.spec-pills span:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+
+.doc-link{box-shadow:var(--shadow-sm);transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .3s ease,color .3s ease;}
+.doc-link:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+
+.btn-gold, .btn.btn-line.on-light{box-shadow:var(--shadow-sm);transition:transform .35s var(--ease),box-shadow .35s var(--ease),color .4s var(--ease);}
+.btn-gold:hover, .btn.btn-line.on-light:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+
+.footer-newsletter{
+  padding:14px 16px 12px;border:1px solid rgba(222,208,184,.16);border-bottom:1px solid rgba(222,208,184,.16);
+  border-radius:3px;box-shadow:var(--shadow-sm);background:rgba(255,255,255,.02);
+}
+
+.field input, .field select, .field textarea{
+  background:rgba(255,255,255,.02);
+  padding:14px 14px;border:1px solid rgba(222,208,184,.18);border-radius:3px;
+  box-shadow:var(--shadow-sm);
+}
+.field input:focus, .field select:focus, .field textarea:focus{box-shadow:var(--shadow-md);}
+
+.pd-key-features{margin-bottom:36px;}
+.pd-key-features .label{font-size:13px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:16px;display:block;}
+.feature-list{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;list-style:none;margin:0;padding:0;}
+@media(max-width:520px){.feature-list{grid-template-columns:1fr;}}
+.feature-list li{
+  font-size:15px;padding:11px 14px 11px 24px;position:relative;
+  background:rgba(162,138,114,.07);border:1px solid var(--taupe-dim);border-radius:3px;
+  box-shadow:var(--shadow-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.feature-list li:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.feature-list li::before{content:'';position:absolute;left:11px;top:50%;transform:translateY(-50%);width:5px;height:5px;background:var(--taupe);border-radius:50%;}
+
+/* extra reveal variants for richer scroll motion */
+.reveal.up-soft{transform:translateY(20px);}
+.reveal.up-soft.in{transform:translateY(0);}
+.reveal.pop{transform:scale(.93);}
+.reveal.pop.in{transform:scale(1);}
+.reveal.rot{transform:translateY(24px) rotate(-1deg);}
+.reveal.rot.in{transform:translateY(0) rotate(0deg);}
+
+
+.pd-video{margin-bottom:34px;}
+.pd-video .label{font-size:13px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:14px;display:block;}
+.pd-video video{width:100%;max-width:260px;display:block;border:1px solid var(--taupe-dim);box-shadow:var(--shadow-sm);border-radius:3px;background:#000;}
 </style>
 </head>
 <body>
@@ -439,6 +525,12 @@ section{position:relative;}
     <div class="spec-pills"><span>No Electricity Needed</span><span>Side + Remote Flush</span><span>Kirin Pressure Assist</span><span>Fully Glazed Trap Way</span><span>Soft-Close Seat</span><span>CUPC&reg; Certified</span><span>ADA Height Compliant</span><span>12" Rough-In</span><span>3.8L / Flush</span></div>
     <div class="pd-docs">
       <a class="doc-link" href="https://cdn.shopify.com/s/files/1/0720/4805/0311/files/PURE_ONE_PLUS_SPECIFICATION_SHEET.pdf?v=1773166200" target="_blank" rel="noopener" data-cursor="Open PDF"><span class="ic">S</span> Specification Sheet</a><a class="doc-link" href="https://cdn.shopify.com/s/files/1/0720/4805/0311/files/Pure-One-Plus_Manual.pdf?v=1780334020" target="_blank" rel="noopener" data-cursor="Open PDF"><span class="ic">M</span> Installation Manual</a>
+    </div>
+    <div class="pd-video">
+      <span class="label">Flush System</span>
+      <video controls playsinline preload="none" poster="/media/flush-system-poster.jpg">
+        <source src="/media/flush-system.mp4" type="video/mp4">
+      </video>
     </div>
     <a href="/contact/?product=Pure+One+Plus" class="btn btn-gold on-light" data-cursor="Enquire"><span>Enquire About This Piece</span><span class="btn-arrow">&rarr;</span></a>
     <div class="pd-related"><a href="/tankless-toilets/">&larr; Back to Tankless Collection</a></div>
@@ -707,6 +799,29 @@ if(contactForm){
 
 /* ---------- year ---------- */
 document.querySelectorAll('[data-year]').forEach(el=> el.textContent = new Date().getFullYear());
+
+
+/* ---------- depth v3: auto-reveal extra elements on scroll ---------- */
+(function(){
+  const candidates = document.querySelectorAll(
+    '.trust-strip .stat, .feature-list li, .doc-link, .timeline .step, .footer-newsletter'
+  );
+  const auto = Array.from(candidates).filter(el=>!el.classList.contains('reveal'));
+  if(!auto.length) return;
+  auto.forEach(el=> el.classList.add('reveal','up-soft'));
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  auto.forEach((el,i)=>{
+    el.style.transitionDelay = ((i%5)*70) + 'ms';
+    io.observe(el);
+  });
+})();
 
 </script>
 </body>
