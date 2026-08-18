@@ -469,7 +469,84 @@ section{position:relative;}
 .reveal.rot.in{transform:translateY(0) rotate(0deg);}
 
 
+/* Flush System Video Modal */
+.video-modal-overlay{
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(13,13,13,.86);
+  display:flex; align-items:center; justify-content:center;
+  padding:32px;
+  opacity:0; visibility:hidden;
+  transition:opacity .35s var(--ease), visibility .35s var(--ease);
+}
+.video-modal-overlay.is-open{ opacity:1; visibility:visible; }
+
+.video-modal{
+  position:relative;
+  width:100%; max-width:960px;
+  background:var(--espresso);
+  border:1px solid var(--taupe-dim);
+  border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.55);
+  transform:translateY(24px) scale(.98);
+  transition:transform .35s var(--ease);
+}
+.video-modal-overlay.is-open .video-modal{ transform:translateY(0) scale(1); }
+
+.video-modal-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 24px;
+  border-bottom:1px solid var(--taupe-dim);
+}
+.video-modal-title{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:20px;
+  letter-spacing:.02em;
+  color:var(--cream);
+  margin:0;
+}
+.video-modal-close{
+  width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--taupe-dim);
+  border-radius:50%;
+  color:var(--taupe-light);
+  font-size:18px;
+  line-height:1;
+  transition:border-color .25s var(--ease), color .25s var(--ease), background .25s var(--ease);
+}
+.video-modal-close:hover{
+  color:var(--ink);
+  background:var(--taupe-light);
+  border-color:var(--taupe-light);
+}
+
+.video-modal-body{
+  padding:0;
+  background:#000;
+}
+.video-modal-body video{
+  width:100%;
+  max-height:70vh;
+  display:block;
+}
+
+.video-modal-footer{
+  padding:14px 24px 20px;
+  color:var(--sand-2);
+  font-family:var(--font-body);
+  font-size:15px;
+  font-style:italic;
+}
+
+@media (max-width:640px){
+  .video-modal-overlay{ padding:14px; }
+  .video-modal-header{ padding:14px 16px; }
+  .video-modal-title{ font-size:17px; }
+  .video-modal-footer{ padding:12px 16px 16px; font-size:14px; }
+}
 </style>
+
 </head>
 <body>
 
@@ -521,7 +598,7 @@ section{position:relative;}
         </div>
     <div class="spec-pills"><span>No Electricity Needed</span><span>Side Button Flush</span><span>Kirin Pressure Assist</span><span>Fully Glazed Trap Way</span><span>Soft-Close Seat</span><span>CUPC&reg; Certified</span><span>ADA Height Compliant</span><span>12" Rough-In</span><span>3.8L / Flush</span></div>
     <div class="pd-docs">
-      <a class="doc-link" href="https://cdn.shopify.com/s/files/1/0720/4805/0311/files/PURE_ONE_SPECIFICATION_SHEET.pdf?v=1773166199" target="_blank" rel="noopener" data-cursor="Open PDF"><span class="ic">S</span> Specification Sheet</a><a class="doc-link" href="https://cdn.shopify.com/s/files/1/0720/4805/0311/files/Pure-One-Manual.pdf?v=1780334093" target="_blank" rel="noopener" data-cursor="Open PDF"><span class="ic">M</span> Installation Manual</a><a class="doc-link" href="/media/flush-system.mp4" target="_blank" rel="noopener" data-cursor="Play Video"><span class="ic">V</span> Flush System Video</a>
+      <a class="doc-link" href="https://cdn.shopify.com/s/files/1/0720/4805/0311/files/PURE_ONE_SPECIFICATION_SHEET.pdf?v=1773166199" target="_blank" rel="noopener" data-cursor="Open PDF"><span class="ic">S</span> Specification Sheet</a><a class="doc-link" href="https://cdn.shopify.com/s/files/1/0720/4805/0311/files/Pure-One-Manual.pdf?v=1780334093" target="_blank" rel="noopener" data-cursor="Open PDF"><span class="ic">M</span> Installation Manual</a><a class="doc-link" href="#" data-cursor="Play Video" onclick="openFlushVideoModal(event)"><span class="ic">V</span> Flush System Video</a>
     </div>
     <a href="/contact/?product=Pure+One" class="btn btn-gold on-light" data-cursor="Enquire"><span>Enquire About This Piece</span><span class="btn-arrow">&rarr;</span></a>
     <div class="pd-related"><a href="/tankless-toilets/">&larr; Back to Tankless Collection</a></div>
@@ -814,6 +891,49 @@ document.querySelectorAll('[data-year]').forEach(el=> el.textContent = new Date(
   });
 })();
 
+</script>
+<div class="video-modal-overlay" id="flushVideoModal" aria-hidden="true">
+  <div class="video-modal" role="dialog" aria-modal="true" aria-labelledby="flushVideoTitle">
+    <div class="video-modal-header">
+      <p class="video-modal-title" id="flushVideoTitle">Flush System Video</p>
+      <button class="video-modal-close" onclick="closeFlushVideoModal()" aria-label="Close video">&#10005;</button>
+    </div>
+    <div class="video-modal-body">
+      <video id="flushVideoPlayer" controls preload="none" poster="/media/flush-system-poster.jpg">
+        <source src="/media/flush-system.mp4" type="video/mp4">
+        Your browser doesn't support embedded video.
+        <a href="/media/flush-system.mp4">Download the video instead.</a>
+      </video>
+    </div>
+    <div class="video-modal-footer">
+      Kirin pressure-assist flush cycle, shown in full.
+    </div>
+  </div>
+</div>
+<script>
+function openFlushVideoModal(e){
+  if(e) e.preventDefault();
+  var overlay = document.getElementById('flushVideoModal');
+  var video = document.getElementById('flushVideoPlayer');
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  if(video){ video.load(); video.play().catch(function(){}); }
+}
+function closeFlushVideoModal(){
+  var overlay = document.getElementById('flushVideoModal');
+  var video = document.getElementById('flushVideoPlayer');
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+  if(video){ video.pause(); }
+}
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeFlushVideoModal();
+});
+document.addEventListener('click', function(e){
+  if(e.target && e.target.id === 'flushVideoModal') closeFlushVideoModal();
+});
 </script>
 </body>
 </html>
