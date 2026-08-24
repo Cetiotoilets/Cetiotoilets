@@ -918,7 +918,20 @@ function openFlushVideoModal(e){
   overlay.classList.add('is-open');
   overlay.setAttribute('aria-hidden','false');
   document.body.style.overflow = 'hidden';
-  if(video){ video.load(); video.play().catch(function(){}); }
+  if(video){
+    video.currentTime = 0;
+    var playPromise = video.play();
+    if(playPromise !== undefined){
+      playPromise.catch(function(){
+        // Autoplay with sound was blocked by the browser -- retry muted,
+        // which is always allowed, then unmute once playback has started.
+        video.muted = true;
+        video.play().then(function(){
+          setTimeout(function(){ video.muted = false; }, 150);
+        }).catch(function(){});
+      });
+    }
+  }
 }
 function closeFlushVideoModal(){
   var overlay = document.getElementById('flushVideoModal');
