@@ -421,7 +421,15 @@ section{position:relative;}
     <h1 style="font-size:clamp(32px,4vw,52px);margin:22px 0 16px;color:var(--cream);">Let's specify<br>your bathroom.</h1>
     <p style="opacity:.75;max-width:440px;margin-bottom:50px;">Tell us which silhouette caught your eye and we'll follow up with pricing, lead times, and a specification sheet.</p>
 
-    <form id="contact-form">
+    <form id="contact-form" action="https://formsubmit.co/cetiotoilets@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New inquiry from Cetio website">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Cetio. We've received your message and a member of our team will be in touch shortly with pricing, lead times, and specification details. In the meantime, feel free to browse our full collection at https://cetio.net.
+
+Warm regards,
+The Cetio Team">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="field">
         <label for="name">Full Name</label>
         <input type="text" id="name" name="name" required>
@@ -710,9 +718,26 @@ if(contactForm){
     e.preventDefault();
     const btn = contactForm.querySelector('button[type="submit"]');
     const original = btn.innerHTML;
-    btn.innerHTML = '<span>Message Received</span>';
-    contactForm.reset();
-    setTimeout(()=>{btn.innerHTML = original;}, 3200);
+    btn.disabled = true;
+    btn.innerHTML = '<span>Sending...</span>';
+
+    fetch(contactForm.action, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(contactForm)
+    })
+    .then(res => {
+      if(!res.ok) throw new Error('Request failed');
+      btn.innerHTML = '<span>Message Received</span>';
+      contactForm.reset();
+    })
+    .catch(() => {
+      btn.innerHTML = '<span>Something went wrong -- please email us directly</span>';
+    })
+    .finally(() => {
+      btn.disabled = false;
+      setTimeout(()=>{btn.innerHTML = original;}, 4000);
+    });
   });
 }
 
